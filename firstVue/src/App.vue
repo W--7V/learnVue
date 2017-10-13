@@ -25,7 +25,6 @@ export default {
 				label: 'walking',
 				isFinished: true
 			}
-			
 		]
 	}
   }

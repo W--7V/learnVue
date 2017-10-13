@@ -35,6 +35,8 @@ export default new Router({
 	},{
 		path:'/content/:id',
 		component: Content
+	},{
+		path:'/redirectToIndex',redirect:'/index/content'
 	}
   ]
 })

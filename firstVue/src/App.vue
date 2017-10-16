@@ -1,33 +1,33 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-	<!--<ul>
-		<li v-for="item in items">
-		{{item}}
-		</li>
-	</ul>-->
-    <router-view/>
-	
-	<router-link to="/">go back</router-link>
+		<NavMenu></NavMenu>
+		<router-view/>
   </div>
 </template>
 
 <script>
+import './page/style.scss'
+import NavMenu from './page/NavMenu'
+
+
 export default {
   name: 'app',
   data: function(){
-	return {
-		items:[
-			{
-				label: 'coding',
-				isFinished: true
-			},{
-				label: 'walking',
-				isFinished: true
-			}
-		]
+		return {
+			items:[
+				{
+					label: 'coding',
+					isFinished: true
+				},{
+					label: 'walking',
+					isFinished: true
+				}
+			]
+		}
+	},
+	components:{
+		NavMenu
 	}
-  }
 }
 </script>
 

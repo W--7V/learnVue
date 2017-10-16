@@ -4,6 +4,7 @@
 		<router-view/>
 		<router-link to="/index/foo/post">go to index</router-link>
 		<div>User {{ $route.params.id }}</div>
+		<router-link to="/">go back</router-link>
 	</div>
 </template>
 

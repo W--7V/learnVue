@@ -1,0 +1,26 @@
+#nav-menu{
+    width: 240px;
+    min-width: 240px;
+    height: 400px;
+    background-color: #000000;
+    float: left;
+    box-shadow: 5px 0 20px rgba(0,0,0,.3);
+    .nav-link{
+        display: block;
+    }
+    .el-menu {
+        background-color: #1A191F;
+    }
+    .el-menu-item,
+    .el-submenu .el-submenu__title {
+      height: 44px;
+      line-height: 44px;
+      color: #dbdbdb;
+      &:hover {
+        background-color: #2b3035;
+      }
+    }
+    .router-link-active {
+        color: #03a9f4;
+    }
+}

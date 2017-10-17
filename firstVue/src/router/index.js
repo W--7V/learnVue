@@ -17,26 +17,27 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: HelloWorld
-    },{
-		path:'/index/:id',
-		component: Index,
-		children:[
-			{
-				path:'',
-				component: Home
-			},{
-				path:'priofile',
-				component: Profile
-			},{
-				path:'post',
-				component: Post
-			}
-		]
-	},{
-		path:'/content/:id',
-		component: Content
-	},{
-		path:'/redirectToIndex',redirect:'/index/content'
-	}
+		},
+		{
+			path:'/index/:id',
+			component: Index,
+			children:[
+				{
+					path:'',
+					component: Home
+				},{
+					path:'priofile',
+					component: Profile
+				},{
+					path:'post',
+					component: Post
+				}
+			]
+		},{
+			path:'/content/:id',
+			component: Content
+		},{
+			path:'/redirectToIndex',redirect:'/index/content'
+		}
   ]
 })

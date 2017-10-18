@@ -1,13 +1,14 @@
 <template>
   <div id="app">
 		<NavMenu></NavMenu>
-		<router-view/>
+		<Container></Container>
   </div>
 </template>
 
 <script>
 import './page/style.scss'
 import NavMenu from './page/NavMenu'
+import Container from './page/Container'
 
 
 export default {
@@ -26,7 +27,8 @@ export default {
 		}
 	},
 	components:{
-		NavMenu
+		NavMenu,
+		Container
 	}
 }
 </script>

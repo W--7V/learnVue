@@ -1,4 +1,4 @@
-<template lang="html">
+<template lang="html" style="float:right">
   <el-menu default-active="1" id="nav-menu" theme="dark">
     <div class="logo">
       <router-link to="/">
@@ -11,6 +11,7 @@
       <el-menu-item index="2-1"><router-link to="/page1" class="nav-link">折线</router-link></el-menu-item>
       <el-menu-item index="2-2"><router-link to="/page2" class="nav-link">混合图</router-link></el-menu-item>
       <el-menu-item index="2-3"><router-link to="/page2" class="nav-link">扇形图</router-link></el-menu-item>
+      <el-menu-item index="2-4"><router-link to="/table" class="nav-link">Table</router-link></el-menu-item>
     </el-submenu>
     <el-menu-item index="3"><router-link to="/page3" class="nav-link"><i class="el-icon-message"></i>仓储管理</router-link></el-menu-item>
   </el-menu>

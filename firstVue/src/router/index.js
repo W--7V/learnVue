@@ -5,6 +5,7 @@ import Index from '@/page/index'
 import Content from '@/page/content'
 import Profile from '@/page/profile'
 import Post from '@/page/post'
+import Table from '@/page/table'
 
 Vue.use(Router)
 
@@ -17,8 +18,7 @@ export default new Router({
       path: '/',
       name: 'Hello',
       component: HelloWorld
-		},
-		{
+		},{
 			path:'/index/:id',
 			component: Index,
 			children:[
@@ -38,6 +38,9 @@ export default new Router({
 			component: Content
 		},{
 			path:'/redirectToIndex',redirect:'/index/content'
+		},{
+			path:'/table',
+			component: Table
 		}
   ]
 })

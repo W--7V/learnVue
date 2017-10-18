@@ -9,20 +9,19 @@
 
 #nav-menu{
     width: 240px;
-    min-width: 240px;
     height: calc(100%);
     background-color: #000000;
     float: left;
     box-shadow: 5px 0 20px rgba(0,0,0,.3);
     .logo {
-        width: 240px;
+        width: 100%;
         height: 60px;
         text-align: center;
         background-color: #20202A;
         img {
-          margin-top: 12px;
+            margin-top: 12px;
         }
-      }
+    }
     .nav-link{
         display: block;
     }
@@ -60,3 +59,10 @@
   .router-link-active {
     color: #20a0ff;
   }
+
+  #element_table{
+    width: calc(80% - 240px);
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}

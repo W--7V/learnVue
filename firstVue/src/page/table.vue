@@ -56,8 +56,8 @@
                     <el-date-picker v-model="temp.empbaseInfo.createTime" type="datetime" placeholder="选择日期时间"></el-date-picker>
                 </el-form-item> -->
             </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button type="primary" @click="dialogPvVisible = false">确 定</el-button>
+            <span class="dialog-footer" align="center">
+                <el-button type="primary" @click="update()" >确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -221,21 +221,33 @@ import axios from 'axios'
                 })
             },
             update() {
-                this.temp.timestamp = +this.temp.timestamp
-                for (const v of this.list) {
-                    if (v.id === this.temp.id) {
-                    const index = this.list.indexOf(v)
-                    this.list.splice(index, 1, this.temp)
-                    break
-                    }
-                }
-                this.dialogFormVisible = false
-                this.$notify({
-                    title: '成功',
-                    message: '更新成功',
-                    type: 'success',
-                    duration: 2000
+                // this.temp.timestamp = +this.temp.timestamp
+                // for (const v of this.list) {
+                //     if (v.id === this.temp.id) {
+                //     const index = this.list.indexOf(v)
+                //     this.list.splice(index, 1, this.temp)
+                //     break
+                //     }
+                // }
+                var qs = require('querystring');
+
+                this.$ajax({
+                    url:'http://localhost/providerInfo/saveOrUpdate',
+                    method:'post',
+                    data:qs.stringify(this.temp)
+                }).then((response) => {
+                    this.$message({
+                        message: '操作成功',
+                        type: 'success'
+                    })
                 })
+                this.dialogFormVisible = false
+                // this.$notify({
+                //     title: '成功',
+                //     message: '更新成功',
+                //     type: 'success',
+                //     duration: 2000
+                // })
             },
             resetTemp() {
                 this.temp = {

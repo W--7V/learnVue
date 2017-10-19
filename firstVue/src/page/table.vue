@@ -1,5 +1,11 @@
 <style>
-
+#element_table{
+    width: calc(100% - 240px);
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100%;
+}
 </style>
 
 
@@ -33,9 +39,9 @@ import axios from 'axios'
             };
         },
         created: function(){
-            // this.$ajax.get('http://localhost/providerInfo/list').then((response) => {
-            //     console.log(response);
-            // })
+            this.$ajax.post('http://localhost/providerInfo/list').then((response) => {
+                console.log(response);
+            })
 
 
             // axios({

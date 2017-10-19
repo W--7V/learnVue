@@ -3,14 +3,14 @@
     height: 100%;
     width: 100%;
     // min-width: 1080px;
-    background-color: #1A191F;
+    background-color: rgb(247, 246, 250);
     color: #dbdbdb;
   }
 
 #nav-menu{
     width: 240px;
     height: calc(100%);
-    background-color: #000000;
+    background-color: #393e42;
     float: left;
     box-shadow: 5px 0 20px rgba(0,0,0,.3);
     .logo {
@@ -58,4 +58,18 @@
   }
   .router-link-active {
     color: #20a0ff;
+  }
+
+  .link-type,
+  .link-type:focus {
+    color: #337ab7;
+    cursor: pointer;
+    &:hover {
+      color: rgb(32, 160, 255);
+    }
+  }
+
+  .pagination-container {
+    margin-top: 30px;
+    float: left;
   }

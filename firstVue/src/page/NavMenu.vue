@@ -5,6 +5,7 @@
         <!--<img src="../../assets/images/logo.svg" />-->
       </router-link>
     </div>
+
     <el-menu-item index="1"><router-link to="/" class="nav-link"><i class="el-icon-message"></i>首页</router-link></el-menu-item>
     <el-submenu index="2">
       <template slot="title"><i class="el-icon-menu"></i>可视化数据</template>
@@ -16,3 +17,13 @@
     <el-menu-item index="3"><router-link to="/page3" class="nav-link"><i class="el-icon-message"></i>仓储管理</router-link></el-menu-item>
   </el-menu>
 </template>
+
+<script>
+export default {
+  name:'NavMenu',
+  props:['items'],
+  created:function(){
+    console.log(this.items)
+  }
+}
+</script>

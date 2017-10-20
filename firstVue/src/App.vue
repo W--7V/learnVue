@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-		<NavMenu></NavMenu>
+		<NavMenu :items="items"></NavMenu>
 		<Container></Container>
   </div>
 </template>
@@ -17,11 +17,13 @@ export default {
 		return {
 			items:[
 				{
-					label: 'coding',
-					isFinished: true
+					index: '5',
+					link:'/',
+					name:'首页5'
 				},{
-					label: 'walking',
-					isFinished: true
+					index: '6',
+					link:'/',
+					name:'首页6'
 				}
 			]
 		}

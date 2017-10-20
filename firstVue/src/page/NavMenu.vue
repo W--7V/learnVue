@@ -23,7 +23,6 @@ export default {
   name:'NavMenu',
   props:['items'],
   created:function(){
-    console.log(this.items)
   }
 }
 </script>

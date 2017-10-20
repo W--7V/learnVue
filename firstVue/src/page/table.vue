@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <tableComp :build="build"></tableComp>
+        <table-comp :build="build" v-on:invok="invokBySubComp"></table-comp>
     </div>
 </template>
 
@@ -25,7 +25,8 @@ export default {
                 },{
                     type:'button',
                     placeholder:'搜索',
-                    name:'search'
+                    name:'search',
+                    invokeMethod:'search'
                 }],
                 table:[{
                     prop:'address',
@@ -48,6 +49,17 @@ export default {
     },
     components:{
         tableComp
+    },
+    methods:{
+        invokBySubComp:function(){
+            this.$message({
+                message: '被子组件调用',
+                type: 'success'
+            })
+        },
+        search:function(){
+            
+        }
     }
 }
 </script>

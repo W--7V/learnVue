@@ -82,25 +82,9 @@
 
 <script>
 import axios from 'axios'
-    var tableData=[{
-        "createTime":"2017-10-17",  
-        "updateTime":"2017-10-18"
-    },{
-        "createTime":"2017-10-19",  
-        "updateTime":"2017-10-20"
-    }];
-
-    const calendarTypeOptions = [
-        { key: 'CN', display_name: '中国' },
-        { key: 'US', display_name: '美国' },
-        { key: 'JP', display_name: '日本' },
-        { key: 'EU', display_name: '欧元区' }
-    ]
-
     export default {
         data:function() {
             return {
-                tableData:"",
                 list: null,
                 total: null,
                 listLoading: false,
@@ -123,7 +107,6 @@ import axios from 'axios'
                     status: 'published'
                 },
                 importanceOptions: [1, 2, 3],
-                calendarTypeOptions,
                 sortOptions: [{ label: '按ID升序列', key: '+id' }, { label: '按ID降序', key: '-id' }],
                 statusOptions: ['published', 'draft', 'deleted'],
                 dialogFormVisible: false,
@@ -146,7 +129,6 @@ import axios from 'axios'
                 this.total = response.data.total
                 this.listLoading = true
             })
-            console.log(this.build);
 
 
             // axios({
@@ -177,6 +159,8 @@ import axios from 'axios'
                     this.total = response.data.total
                     this.listLoading = true
                 })
+
+                this.$emit('invok','');
             },
             handleFilter() {
                 this.listQuery.page = 1
@@ -260,7 +244,7 @@ import axios from 'axios'
                         type: 'success'
                     })
                 })
-                this.dialogFormVisible = false
+                this.dialogPvVisible = false
                 // this.$notify({
                 //     title: '成功',
                 //     message: '更新成功',

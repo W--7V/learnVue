@@ -12,12 +12,12 @@ export default {
             build:{
                 top:[{
                     type:'input',
-                    placeholder:'姓名',
-                    name:'name'
+                    placeholder:'登录名',
+                    name:'listQuery.loginName'
                 },{
                     type:'select',
                     placeholder:'性别',
-                    name:'gender',
+                    name:'listQuery.gender',
                     options:[
                         '男','女'
                     ]
@@ -50,7 +50,12 @@ export default {
                 bottom:{
                     pagesize:[20,50,100]
                 },
-                searchFun:undefined
+                searchFun:undefined,
+                listQuery: {
+                    page: 1,
+                    limit: 20,
+                    loginName:undefined
+                },
             }
         }
     },
@@ -92,7 +97,7 @@ export default {
                 url:'http://localhost/member/list',
                 method:'post',
                 async: false,
-                // data:qs.stringify(this.listQuery)
+                data:qs.stringify(subComp.listQuery)
             }).then((response) => {
                 subComp.list = response.data.rows
                 subComp.total = response.data.total

@@ -17,7 +17,7 @@
         <el-button class="filter-item" type="primary" icon="search" @click="handleFilter">搜索</el-button> -->
         <template v-for="item in this.build.top">
             <template v-if="item.type === 'input'">
-                <el-input style="width:200px" :placeholder="item.placeholder" class="filter-item" v-model="listQuery.address" :key="item.type"/>
+                <el-input style="width:200px" :placeholder="item.placeholder" class="filter-item" v-model="item.name" :key="item.type"/>
             </template>
             <template v-else-if="item.type === 'select'">
                 <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" :placeholder="item.placeholder" :key="item.type">
@@ -89,10 +89,6 @@ import axios from 'axios'
                 total: null,
                 listLoading: false,
                 listQuery: {
-                    page: 1,
-                    limit: 20,
-                    importance: undefined,
-                    address: undefined,
                 },
                 temp: {
                 },
@@ -101,15 +97,9 @@ import axios from 'axios'
         },
         props:['build'],
         created: function(){
+            this.listQuery = Object.assign({}, this.build.listQuery)
             this.build.searchFun(this);
-            // this.listLoading = false
-            // this.$ajax.post('http://localhost/providerInfo/list').then((response) => {
-            //     this.list = response.data.rows
-            //     this.total = response.data.total
-            //     this.listLoading = true
-            // })
-
-
+            console.log(this.build.top)
             // axios({
             //     method:'post',
             //     url:'/api/providerInfo/list',

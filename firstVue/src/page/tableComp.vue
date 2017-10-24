@@ -153,13 +153,13 @@ import axios from 'axios'
             },
             handleFilter(item) {
                 this.listQuery.page = 1
-                // this.getList()
-                if(this.$emit(item.invokeMethod,item.name)){
-                    console.log(this.$parent.list)
-                    this.list = this.$parent.list
-                    this.total = this.$parent.total
-                    this.listLoading = true
-                }
+                this.getList()
+                // if(this.$emit(item.invokeMethod,this.listQuery)){
+                //     console.log(this.$parent.list)
+                //     this.list = this.$parent.list
+                //     this.total = this.$parent.total
+                //     this.listLoading = true
+                // }
             },
             handleSizeChange(val) {
                 this.listQuery.limit = val

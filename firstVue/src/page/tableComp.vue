@@ -93,22 +93,15 @@ import axios from 'axios'
                     limit: 20,
                     importance: undefined,
                     address: undefined,
-                    sort: '+id'
                 },
                 temp: {
-                    id: undefined,
-                    importance: 0,
-                    remark: '',
-                    timestamp: 0,
-                    title: '',
-                    type: '',
-                    status: 'published'
                 },
                 dialogPvVisible: false,
             };
         },
         props:['build'],
         created: function(){
+            this.build.searchFun(this);
             // this.listLoading = false
             // this.$ajax.post('http://localhost/providerInfo/list').then((response) => {
             //     this.list = response.data.rows
@@ -124,38 +117,31 @@ import axios from 'axios'
             //     console.log(response);
             // })
         },methods:{
-            getList() {
-                this.listLoading = false
-                var qs = require('querystring');
+            // getList() {
+            //     this.listLoading = false
+            //     var qs = require('querystring');
 
-                this.$ajax({
-                    url:'http://localhost/providerInfo/list',
-                    method:'post',
-                    data:qs.stringify(this.listQuery)
-                }).then((response) => {
-                    this.list = response.data.rows
-                    this.total = response.data.total
-                    this.listLoading = true
-                })
-            },
+            //     this.$ajax({
+            //         url:'http://localhost/providerInfo/list',
+            //         method:'post',
+            //         data:qs.stringify(this.listQuery)
+            //     }).then((response) => {
+            //         this.list = response.data.rows
+            //         this.total = response.data.total
+            //         this.listLoading = true
+            //     })
+            // },
             handleFilter(item) {
                 this.listQuery.page = 1
-                this.build.func(this);
-                // this.getList()
-                // if(this.$emit(item.invokeMethod,this.listQuery)){
-                //     console.log(this.$parent.list)
-                //     this.list = this.$parent.list
-                //     this.total = this.$parent.total
-                //     this.listLoading = true
-                // }
+                item.func(this)
             },
             handleSizeChange(val) {
                 this.listQuery.limit = val
-                this.getList()
+                this.build.searchFun(this);
             },
             handleCurrentChange(val) {
                 this.listQuery.page = val
-                this.getList()
+                this.build.searchFun(this);
             },
             create() {
                 this.temp.id = parseInt(Math.random() * 100) + 1024
@@ -171,14 +157,6 @@ import axios from 'axios'
                 })
             },
             update() {
-                // this.temp.timestamp = +this.temp.timestamp
-                // for (const v of this.list) {
-                //     if (v.id === this.temp.id) {
-                //     const index = this.list.indexOf(v)
-                //     this.list.splice(index, 1, this.temp)
-                //     break
-                //     }
-                // }
                 var qs = require('querystring');
 
                 this.$ajax({
@@ -200,7 +178,6 @@ import axios from 'axios'
                 // })
             },
             handleFetchPv(pv) {
-                console.log(pv);
                 this.temp = Object.assign({}, pv)
                 this.dialogPvVisible = true
             }

@@ -6,6 +6,7 @@ import Content from '@/page/content'
 import Profile from '@/page/profile'
 import Post from '@/page/post'
 import Table from '@/page/table'
+import member from '@/page/member'
 
 Vue.use(Router)
 
@@ -41,6 +42,9 @@ export default new Router({
 		},{
 			path:'/table',
 			component: Table
+		},{
+			path:'/member',
+			component: member
 		}
   ]
 })

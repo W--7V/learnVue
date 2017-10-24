@@ -1,4 +1,3 @@
-
 <template>
     <div>
         <table-comp :build="build" v-on:search="subSearch" v-on:reset="subReset"></table-comp>
@@ -13,8 +12,8 @@ export default {
             build:{
                 top:[{
                     type:'input',
-                    placeholder:'地址',
-                    name:'address'
+                    placeholder:'姓名',
+                    name:'name'
                 },{
                     type:'select',
                     placeholder:'性别',
@@ -26,45 +25,41 @@ export default {
                     type:'button',
                     placeholder:'搜索',
                     name:'subSearch',
-                    invokeMethod:'search'
+                    invokeMethod:'search',
+                    func:undefined
                 },{
                     type:'button',
                     placeholder:'清空',
                     name:'subReset',
-                    invokeMethod:'reset'
+                    invokeMethod:'reset',
+                    func:undefined
                 }],
                 table:[{
-                    prop:'address',
-                    label:'地址'
+                    prop:'loginName',
+                    label:'登录名'
                 },{
-                    prop:'contactMan',
-                    label:'联系人'
+                    prop:'name',
+                    label:'姓名'
                 },{
-                    prop:'providerName',
-                    label:'供应商'
+                    prop:'gender',
+                    label:'性别'
                 },{
-                    prop:'empbaseInfoName',
-                    label:'对接人'
+                    prop:'age',
+                    label:'年龄'
                 }],
                 bottom:{
                     pagesize:[20,50,100]
-                }
-            },
-            listQuery: {
-                page: 1,
-                rows: 20,
-            },
-            list: null,
-            total: null,
-            listLoading: false,
+                },
+                searchFun:undefined
+            }
         }
     },
     components:{
         tableComp
     },
     created:function(){
-        // console.log(this.build)
-        this.build.func = this.getList
+        this.build.top[2].func = this.getList
+        this.build.searchFun = this.getList
     },
     methods:{
         subSearch:function(name){
@@ -88,31 +83,22 @@ export default {
                     this.item("123");
                 }
             }
-            // var func = eval(name)
-            // this.subSearch(name)
-            // func(name)
-            // this.$message({
-            //     message: '被子组件调用'+name,
-            //     type: 'success'
-            // })
         },
-        getList(compo) {
-            compo.listLoading = false
+        getList(subComp) {
+            subComp.listLoading = false
             var qs = require('querystring');
 
             this.$ajax({
-                url:'http://localhost/providerInfo/list',
+                url:'http://localhost/member/list',
                 method:'post',
                 async: false,
                 // data:qs.stringify(this.listQuery)
             }).then((response) => {
-                compo.list = response.data.rows
-                compo.total = response.data.total
-                compo.listLoading = true
-                console.log(compo);
+                subComp.list = response.data.rows
+                subComp.total = response.data.total
+                subComp.listLoading = true
             })
         },
     }
 }
 </script>
-

@@ -92,8 +92,6 @@ import axios from 'axios'
                     page: 1,
                     limit: 20,
                     importance: undefined,
-                    title: undefined,
-                    type: undefined,
                     address: undefined,
                     sort: '+id'
                 },
@@ -106,18 +104,7 @@ import axios from 'axios'
                     type: '',
                     status: 'published'
                 },
-                sortOptions: [{ label: '按ID升序列', key: '+id' }, { label: '按ID降序', key: '-id' }],
-                statusOptions: ['published', 'draft', 'deleted'],
-                dialogFormVisible: false,
-                dialogStatus: '',
-                textMap: {
-                    update: '编辑',
-                    create: '创建'
-                },
                 dialogPvVisible: false,
-                pvData: [],
-                showAuditor: false,
-                tableKey: 0
             };
         },
         props:['build'],
@@ -153,7 +140,8 @@ import axios from 'axios'
             },
             handleFilter(item) {
                 this.listQuery.page = 1
-                this.getList()
+                this.build.func(this);
+                // this.getList()
                 // if(this.$emit(item.invokeMethod,this.listQuery)){
                 //     console.log(this.$parent.list)
                 //     this.list = this.$parent.list

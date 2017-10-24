@@ -48,7 +48,9 @@ export default {
                 }],
                 bottom:{
                     pagesize:[20,50,100]
-                }
+                },
+                func:{
+                },
             },
             listQuery: {
                 page: 1,
@@ -61,6 +63,10 @@ export default {
     },
     components:{
         tableComp
+    },
+    created:function(){
+        // console.log(this.build)
+        this.build.func = this.getList
     },
     methods:{
         subSearch:function(name){
@@ -92,20 +98,20 @@ export default {
             //     type: 'success'
             // })
         },
-        getList() {
-            this.listLoading = false
+        getList(compo) {
+            compo.listLoading = false
             var qs = require('querystring');
 
             this.$ajax({
                 url:'http://localhost/providerInfo/list',
                 method:'post',
                 async: false,
-                data:qs.stringify(this.listQuery)
+                // data:qs.stringify(this.listQuery)
             }).then((response) => {
-                this.list = response.data.rows
-                this.total = response.data.total
-                this.listLoading = true
-                console.log(this.list);
+                compo.list = response.data.rows
+                compo.total = response.data.total
+                compo.listLoading = true
+                console.log(compo);
             })
         },
     }

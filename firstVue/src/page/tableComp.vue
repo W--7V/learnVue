@@ -25,7 +25,7 @@
                 </el-select>
             </template>
             <template v-else-if="item.type === 'button'">
-                <el-button class="filter-item" type="primary" icon="search" @click="handleFilter" :key="item.type">{{item.placeholder}}</el-button>
+                <el-button class="filter-item" type="primary" icon="search" @click="handleFilter(item)" :key="item.type">{{item.placeholder}}</el-button>
             </template>
         </template>
 
@@ -106,7 +106,6 @@ import axios from 'axios'
                     type: '',
                     status: 'published'
                 },
-                importanceOptions: [1, 2, 3],
                 sortOptions: [{ label: '按ID升序列', key: '+id' }, { label: '按ID降序', key: '-id' }],
                 statusOptions: ['published', 'draft', 'deleted'],
                 dialogFormVisible: false,
@@ -123,12 +122,12 @@ import axios from 'axios'
         },
         props:['build'],
         created: function(){
-            this.listLoading = false
-            this.$ajax.post('http://localhost/providerInfo/list').then((response) => {
-                this.list = response.data.rows
-                this.total = response.data.total
-                this.listLoading = true
-            })
+            // this.listLoading = false
+            // this.$ajax.post('http://localhost/providerInfo/list').then((response) => {
+            //     this.list = response.data.rows
+            //     this.total = response.data.total
+            //     this.listLoading = true
+            // })
 
 
             // axios({
@@ -138,14 +137,6 @@ import axios from 'axios'
             //     console.log(response);
             // })
         },methods:{
-            //时间格式化
-            dateFormat:function(row, column) {
-                var date = row[column.property];
-                if (date == undefined) {
-                    return "";
-                }
-                return moment(date).format("YYYY-MM-DD HH:mm:ss");
-            },
             getList() {
                 this.listLoading = false
                 var qs = require('querystring');
@@ -159,12 +150,16 @@ import axios from 'axios'
                     this.total = response.data.total
                     this.listLoading = true
                 })
-
-                this.$emit('invok','');
             },
-            handleFilter() {
+            handleFilter(item) {
                 this.listQuery.page = 1
-                this.getList()
+                // this.getList()
+                if(this.$emit(item.invokeMethod,item.name)){
+                    console.log(this.$parent.list)
+                    this.list = this.$parent.list
+                    this.total = this.$parent.total
+                    this.listLoading = true
+                }
             },
             handleSizeChange(val) {
                 this.listQuery.limit = val
@@ -173,42 +168,6 @@ import axios from 'axios'
             handleCurrentChange(val) {
                 this.listQuery.page = val
                 this.getList()
-            },
-            timeFilter(time) {
-                if (!time[0]) {
-                    this.listQuery.start = undefined
-                    this.listQuery.end = undefined
-                    return
-                }
-                this.listQuery.start = parseInt(+time[0] / 1000)
-                this.listQuery.end = parseInt((+time[1] + 3600 * 1000 * 24) / 1000)
-            },
-            handleModifyStatus(row, status) {
-                this.$message({
-                    message: '操作成功',
-                    type: 'success'
-                })
-                row.status = status
-            },
-            handleCreate() {
-                this.resetTemp()
-                this.dialogStatus = 'create'
-                this.dialogFormVisible = true
-            },
-            handleUpdate(row) {
-                this.temp = Object.assign({}, row)
-                this.dialogStatus = 'update'
-                this.dialogFormVisible = true
-            },
-            handleDelete(row) {
-                this.$notify({
-                    title: '成功',
-                    message: '删除成功',
-                    type: 'success',
-                    duration: 2000
-                })
-                const index = this.list.indexOf(row)
-                this.list.splice(index, 1)
             },
             create() {
                 this.temp.id = parseInt(Math.random() * 100) + 1024
@@ -252,30 +211,10 @@ import axios from 'axios'
                 //     duration: 2000
                 // })
             },
-            resetTemp() {
-                this.temp = {
-                    id: undefined,
-                    importance: 0,
-                    remark: '',
-                    timestamp: 0,
-                    title: '',
-                    status: 'published',
-                    type: ''
-                }
-            },
             handleFetchPv(pv) {
                 console.log(pv);
                 this.temp = Object.assign({}, pv)
                 this.dialogPvVisible = true
-            },
-            formatJson(filterVal, jsonData) {
-                return jsonData.map(v => filterVal.map(j => {
-                    if (j === 'timestamp') {
-                    return parseTime(v[j])
-                    } else {
-                    return v[j]
-                    }
-                }))
             }
         }
     }

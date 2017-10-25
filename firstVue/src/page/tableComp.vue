@@ -17,7 +17,7 @@
         <el-button class="filter-item" type="primary" icon="search" @click="handleFilter">搜索</el-button> -->
         <template v-for="item in this.build.top">
             <template v-if="item.type === 'input'">
-                <el-input style="width:200px" :placeholder="item.placeholder" class="filter-item" v-model="item.name" :key="item.type"/>
+                <el-input style="width:200px" :placeholder="item.placeholder" class="filter-item" @change="changeQuery(item.name)"  :key="item.type"/>
             </template>
             <template v-else-if="item.type === 'select'">
                 <el-select clearable style="width: 90px" class="filter-item" v-model="listQuery.importance" :placeholder="item.placeholder" :key="item.type">
@@ -132,6 +132,10 @@ import axios from 'axios'
             handleCurrentChange(val) {
                 this.listQuery.page = val
                 this.build.searchFun(this);
+            },changeQuery(value){
+                this.listQuery = Object.assign({}, value)
+                console.log(value)
+                console.log(this.listQuery)
             },
             create() {
                 this.temp.id = parseInt(Math.random() * 100) + 1024

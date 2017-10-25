@@ -26,12 +26,13 @@ export default {
                     type:'button',
                     placeholder:'搜索',
                     name:'subSearch',
-                    invokeMethod:'search'
+                    func:undefined
+
                 },{
                     type:'button',
                     placeholder:'清空',
                     name:'subReset',
-                    invokeMethod:'reset'
+                    func:undefined
                 }],
                 table:[{
                     prop:'address',
@@ -48,12 +49,15 @@ export default {
                 }],
                 bottom:{
                     pagesize:[20,50,100]
-                }
+                },
+                searchFun:undefined,
+                listQuery: {
+                    address:undefined,
+                    page: 1,
+                    rows: 20
+                },
             },
-            listQuery: {
-                page: 1,
-                rows: 20,
-            },
+            
             list: null,
             total: null,
             listLoading: false,
@@ -64,7 +68,8 @@ export default {
     },
     created:function(){
         // console.log(this.build)
-        this.build.func = this.getList
+        this.build.top[2].func = this.getList
+        this.build.searchFun = this.getList
     },
     methods:{
         subSearch:function(name){
@@ -88,28 +93,20 @@ export default {
                     this.item("123");
                 }
             }
-            // var func = eval(name)
-            // this.subSearch(name)
-            // func(name)
-            // this.$message({
-            //     message: '被子组件调用'+name,
-            //     type: 'success'
-            // })
         },
-        getList(compo) {
-            compo.listLoading = false
+        getList(subComp) {
+            subComp.listLoading = false
             var qs = require('querystring');
 
             this.$ajax({
                 url:'http://localhost/providerInfo/list',
                 method:'post',
                 async: false,
-                // data:qs.stringify(this.listQuery)
+                data:qs.stringify(subComp.listQuery)
             }).then((response) => {
-                compo.list = response.data.rows
-                compo.total = response.data.total
-                compo.listLoading = true
-                console.log(compo);
+                subComp.list = response.data.rows
+                subComp.total = response.data.total
+                subComp.listLoading = true
             })
         },
     }

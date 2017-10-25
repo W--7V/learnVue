@@ -67,28 +67,6 @@ export default {
         this.build.searchFun = this.getList
     },
     methods:{
-        subSearch:function(name){
-            this.getList()
-            
-            this.$message({
-                message: '被子组件调用'+name,
-                type: 'success'
-            })
-        },
-        subReset:function(name){
-            this.$message({
-                message: '被子组件调用'+name,
-                type: 'success'
-            })
-        },
-        invokBySubComp:function(name){
-            
-            for(var item in this){
-                if(item === subSearch){
-                    this.item("123");
-                }
-            }
-        },
         getList(subComp) {
             subComp.listLoading = false
             var qs = require('querystring');

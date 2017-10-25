@@ -91,25 +91,6 @@ import axios from 'axios'
             },
             create() {
             },
-            update() {
-                var qs = require('querystring');
-
-                this.$ajax({
-                    url:'http://localhost/providerInfo/saveOrUpdate',
-                    method:'post',
-                    data:qs.stringify(this.temp)
-                }).then((response) => {
-                    this.$message({
-                        message: '操作成功',
-                        type: 'success'
-                    })
-                })
-                this.dialogPvVisible = false
-            },
-            handleFetchPv(pv) {
-                this.temp = Object.assign({}, pv)
-                this.dialogPvVisible = true
-            }
         }
     }
 </script>

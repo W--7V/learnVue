@@ -1,6 +1,6 @@
 <template>
     <div>
-        <table-comp :build="build" v-on:search="subSearch" v-on:reset="subReset"></table-comp>
+        <table-comp :build="build"></table-comp>
     </div>
 </template>
 
@@ -13,25 +13,21 @@ export default {
                 top:[{
                     type:'input',
                     placeholder:'登录名',
-                    name:'listQuery.loginName'
+                    name:'loginName'
                 },{
                     type:'select',
                     placeholder:'性别',
-                    name:'listQuery.gender',
+                    name:'gender',
                     options:[
                         '男','女'
                     ]
                 },{
                     type:'button',
                     placeholder:'搜索',
-                    name:'subSearch',
-                    invokeMethod:'search',
                     func:undefined
                 },{
                     type:'button',
                     placeholder:'清空',
-                    name:'subReset',
-                    invokeMethod:'reset',
                     func:undefined
                 }],
                 table:[{
@@ -54,8 +50,12 @@ export default {
                 listQuery: {
                     page: 1,
                     limit: 20,
-                    loginName:undefined
+                    loginName:undefined,
+                    gender:undefined
                 },
+                list:[],
+                total:undefined,
+                listLoading:undefined
             }
         }
     },
@@ -64,24 +64,33 @@ export default {
     },
     created:function(){
         this.build.top[2].func = this.getList
+        this.build.top[3].func = this.reset
         this.build.searchFun = this.getList
     },
     methods:{
-        getList(subComp) {
-            subComp.listLoading = false
+        getList() {
+            this.listLoading = false
             var qs = require('querystring');
 
             this.$ajax({
                 url:'http://localhost/member/list',
                 method:'post',
                 async: false,
-                data:qs.stringify(subComp.listQuery)
+                data:qs.stringify(this.build.listQuery)
             }).then((response) => {
-                subComp.list = response.data.rows
-                subComp.total = response.data.total
-                subComp.listLoading = true
+                this.build.list = response.data.rows
+                this.build.total = response.data.total
+                this.build.listLoading = true
             })
         },
+        reset(){
+            for(var p in this.build.listQuery){
+                if(p != "page" && p != "limit"){
+                    this.build.listQuery[p]=undefined
+                }
+            }
+            console.log(this.build.listQuery)
+        }
     }
 }
 </script>

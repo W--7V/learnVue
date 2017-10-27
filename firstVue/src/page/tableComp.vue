@@ -26,16 +26,15 @@
 
         <el-table :data="build.list" border id="element_table" fit highlight-current-row element-loading-text="加载数据。。。">
             <el-table-column type="index" width="50" ></el-table-column>
-
             <template v-for="item in this.build.table">
-                <el-table-column :prop="item.prop" :label="item.label" align="center" :key="item.label"></el-table-column>
+                <el-table-column v-if="item.operations" :key="item.label" :prop="item.prop" :label="item.label" :min-width="item.width">
+                    <template scope="scope">
+                        <el-button v-for="operation in item.operations" :key="operation.label" size="small" type="danger" @click="operation.func(scope.row)">{{operation.label}}
+                        </el-button>
+                    </template>
+                </el-table-column>
+                <el-table-column v-else :prop="item.prop" :label="item.label" align="center" :key="item.label"></el-table-column>
             </template>
-            <el-table-column label="操作" align="center" width="150">
-                <template scope="scope">
-                    <el-button size="small" type="danger">删除</el-button>
-                    <el-button size="small" @click="handleFetchPv(scope.row)">编辑</el-button>
-                </template>
-            </el-table-column>
         </el-table>
         <div v-show="build.listLoading" class="pagination-container">
             <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page.sync="build.listQuery.page"
@@ -72,12 +71,10 @@ import axios from 'axios'
                 temp: {
                 },
                 dialogPvVisible: false,
-            };
+            }
         },
         props:['build'],
-        created: function(){
-            this.build.searchFun();
-        },methods:{
+        methods:{
             handle(item){
                 item.func()
             },

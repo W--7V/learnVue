@@ -1,23 +1,46 @@
 <template>
     <div>
         <table-comp :build="build"></table-comp>
-        <el-dialog title="成员信息" :visible.sync="dialogPvVisible" size="small">
-            <el-form :model="temp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+        <el-dialog title="成员信息" :visible.sync="addDialogVisible" size="small">
+            <el-form :model="addTemp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
                 <el-form-item label="登录名">
-                    <el-input v-model="temp.loginName" />
+                    <el-input v-model="addTemp.loginName" />
                 </el-form-item>
                 <el-form-item label="姓名">
-                    <el-input v-model="temp.name" />
+                    <el-input v-model="addTemp.name" />
                 </el-form-item>
                 <el-form-item label="性别">
-                    <el-input v-model="temp.gender" />
+                    <el-select v-model="addTemp.gender" clearable>
+                        <el-option v-for="option in genderOptions" :key="option.value" :label="option.label" :value="option.value"></el-option>
+                    </el-select>
                 </el-form-item>
                 <el-form-item label="年龄">
-                    <el-input v-model="temp.age" />
+                    <el-input v-model="addTemp.age" />
                 </el-form-item>
             </el-form>
             <span class="dialog-footer" align="center">
                 <el-button type="primary" @click="save()" >确 定</el-button>
+            </span>
+        </el-dialog>
+        <el-dialog title="成员信息" :visible.sync="editDialogVisible" size="small">
+            <el-form :model="editTemp" label-position="left" label-width="70px" style='width: 400px; margin-left:50px;'>
+                <el-form-item label="登录名">
+                    <el-input v-model="editTemp.loginName" />
+                </el-form-item>
+                <el-form-item label="姓名">
+                    <el-input v-model="editTemp.name" />
+                </el-form-item>
+                <el-form-item label="性别">
+                    <el-select v-model="editTemp.gender">
+                        <el-option v-for="option in genderOptions" :key="option.value" :label="option.label" :value="option.value"></el-option>
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="年龄">
+                    <el-input v-model="editTemp.age" />
+                </el-form-item>
+            </el-form>
+            <span class="dialog-footer" align="center">
+                <el-button type="primary" @click="update()" >确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -29,7 +52,35 @@ var qs = require('querystring');
 export default {
     data:function(){
         return {
-            build:{
+            build:{},
+            addDialogVisible:false,
+            editDialogVisible:false,
+            addTemp: {
+                loginName:undefined,
+                name:undefined,
+                gender:undefined,
+                age:undefined
+            },
+            editTemp: {
+                loginName:undefined,
+                name:undefined,
+                gender:undefined,
+                age:undefined
+            },
+            genderOptions: [{
+                value: 0,
+                label: '男'
+            },{
+                value: 1,
+                label: '女'
+            }]
+        }
+    },
+    components:{
+        tableComp
+    },
+    created:function(){
+        this.build = {
                 top:[{
                     type:'input',
                     placeholder:'登录名',
@@ -44,15 +95,15 @@ export default {
                 },{
                     type:'button',
                     placeholder:'搜索',
-                    func:undefined
+                    func:this.getList
                 },{
                     type:'button',
                     placeholder:'清空',
-                    func:undefined
+                    func:this.resetQuery
                 },{
                     type:'button',
                     placeholder:'新增',
-                    func:undefined
+                    func:this.addDialog
                 }],
                 table:[{
                     prop:'loginName',
@@ -66,11 +117,19 @@ export default {
                 },{
                     prop:'age',
                     label:'年龄'
+                },{
+                    label:'操作',
+                    operations:[{
+                        label: '删除',
+                        func:undefined
+                    },{
+                        label: '编辑',
+                        func:this.editDialog
+                    }]
                 }],
                 bottom:{
                     pagesize:[20,50,100]
                 },
-                searchFun:undefined,
                 listQuery: {
                     page: 1,
                     limit: 20,
@@ -80,26 +139,15 @@ export default {
                 list:[],
                 total:undefined,
                 listLoading:undefined
-            },
-            dialogPvVisible:false,
-            temp: {
-                loginName:undefined,
-                name:undefined,
-                gender:undefined,
-                age:undefined
-            },
-        }
-    },
-    components:{
-        tableComp
-    },
-    created:function(){
-        this.build.top[2].func = this.getList
-        this.build.top[3].func = this.reset
-        this.build.top[4].func = this.addDialog
-        this.build.searchFun = this.getList
+            }
+            this.getList()
     },
     methods:{
+        resetAddTemp(){
+            for(var i in this.addTemp){
+                this.addTemp[i] = undefined
+            }
+        },
         getList() {
             this.listLoading = false
             this.$ajax({
@@ -113,7 +161,7 @@ export default {
                 this.build.listLoading = true
             })
         },
-        reset(){
+        resetQuery(){
             for(var p in this.build.listQuery){
                 if(p != "page" && p != "limit"){
                     this.build.listQuery[p]=undefined
@@ -121,19 +169,38 @@ export default {
             }
         },
         addDialog(){
-            this.dialogPvVisible = true
+            this.resetAddTemp()
+            this.addDialogVisible = true
         },
         save(){
             this.$ajax({
                 url:'http://localhost/member/saveOrUpdate',
                 method:'post',
                 async: false,
-                data:qs.stringify(this.temp)
+                data:qs.stringify(this.addTemp)
             }).then((response) => {
                 // this.build.list = response.data.rows
                 // this.build.total = response.data.total
                 // this.build.listLoading = true
-                this.dialogPvVisible = false
+                this.addDialogVisible = false
+                this.getList()
+            })
+        },
+        editDialog(row){
+            this.editDialogVisible = true
+            this.editTemp = row
+        },
+        update(){
+            this.$ajax({
+                url:'http://localhost/member/saveOrUpdate',
+                method:'post',
+                async: false,
+                data:qs.stringify(this.editTemp)
+            }).then((response) => {
+                // this.build.list = response.data.rows
+                // this.build.total = response.data.total
+                // this.build.listLoading = true
+                this.editDialogVisible = false
                 this.getList()
             })
         }

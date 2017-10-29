@@ -52,32 +52,36 @@ h1{
 
 // 公共样式
 .pull-left {
-    float: left;
-  }
-  .pull-right {
-    float: right;
-  }
-  [v-cloak] {
-    display: none;
-  }
-  a {
-    text-decoration: none;
-    color: #C0CCDA;
-  }
-  .router-link-active {
-    color: #20a0ff;
-  }
+  float: left;
+}
+.pull-right {
+  float: right;
+}
+[v-cloak] {
+  display: none;
+}
+a {
+  text-decoration: none;
+  color: #C0CCDA;
+}
+.router-link-active {
+  color: #20a0ff;
+}
 
-  .link-type,
-  .link-type:focus {
-    color: #337ab7;
-    cursor: pointer;
-    &:hover {
-      color: rgb(32, 160, 255);
-    }
+.link-type,
+.link-type:focus {
+  color: #337ab7;
+  cursor: pointer;
+  &:hover {
+    color: rgb(32, 160, 255);
   }
+}
 
-  .pagination-container {
-    margin-top: 30px;
-    float: left;
-  }
+.pagination-container {
+  margin-top: 30px;
+  float: left;
+}
+
+.filter-item{
+  margin-right: 8px;
+}

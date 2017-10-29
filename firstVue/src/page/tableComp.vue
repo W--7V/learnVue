@@ -16,7 +16,7 @@
             </template>
             <template v-else-if="item.type === 'select'">
                 <el-select clearable style="width: 90px" class="filter-item" v-model="build.listQuery[item.name]" :placeholder="item.placeholder" :key="item.type">
-                    <el-option v-for="op in item.options" :key="op" :label="op" :value="op"></el-option>
+                    <el-option v-for="op in item.options" :key="op.value" :label="op.label" :value="op.value"></el-option>
                 </el-select>
             </template>
             <template v-else-if="item.type === 'button'">

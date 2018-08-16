@@ -13,7 +13,7 @@
                         </el-form-item>
                         <el-form-item label="性别">
                             <el-select v-model="ruleForm.gender" clearable>
-                                <el-option v-for="option in genderOptions" :key="option.value" :label="option.label" :value="option.value"></el-option>
+                              <el-option v-for="option in genderOptions" :key="option.value" :label="option.label" :value="option.value"></el-option>
                             </el-select>
                         </el-form-item>
                         <el-form-item label="年龄">
@@ -30,7 +30,7 @@
                     </el-table>
                 </el-tab-pane>
             </el-tabs>
-            </span><span class="dialog-footer" align="center">
+            <span class="dialog-footer" align="center">
                 <el-button v-if="dialogStatus == 'create'" type="primary" @click="save()" >保 存</el-button>
                 <el-button v-else type="primary" @click="update()" >保 存</el-button>
                 <el-button v-if="activeName == 'second'" type="primary" @click="addDetail" >添加明细</el-button>
@@ -41,6 +41,7 @@
 
 <script>
 import tableComp from './tableComp'
+// import { list } from '@/api/member.js'
 var qs = require('querystring')
 export default {
   data: function() {
@@ -88,8 +89,8 @@ export default {
       placeholder: '性别',
       name: 'gender',
       options: [
-                { label: '男', value: 0 },
-                { label: '女', value: 1 }
+        { label: '男', value: 0 },
+        { label: '女', value: 1 }
       ]
     }, {
       type: 'button',
@@ -113,7 +114,7 @@ export default {
     }, {
       prop: 'genderName',
       label: '性别'
-            // formatter:this.genderFormat
+      // formatter:this.genderFormat
     }, {
       prop: 'age',
       label: '年龄'
@@ -151,8 +152,9 @@ export default {
       console.log(this.listQuery)
 
       this.listLoading = false
+      // list(this.listQuery).then((response) => {
       this.$ajax({
-        url: 'http://localhost/member/list',
+        url: 'http://localhost:8089/assistant/member/list',
         method: 'get',
         async: false,
         params: this.listQuery
@@ -160,7 +162,7 @@ export default {
         this.list = response.data.rows
         this.total = response.data.total
         this.listLoading = true
-                // console.log(this.list)
+        // console.log(this.list)
       })
     },
     resetQuery() {
@@ -218,7 +220,7 @@ export default {
       })
     },
     handleClick(tab, event) {
-            // console.log(tab, event);
+      // console.log(tab, event);
     },
     addDetail() {
       console.log('1111')
@@ -230,7 +232,7 @@ export default {
       } else {
         row.genderName = '女'
       }
-            // console.log(row)
+      // console.log(row)
     }
   }
 }

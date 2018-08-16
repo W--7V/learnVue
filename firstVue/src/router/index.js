@@ -13,38 +13,38 @@ Vue.use(Router)
 const Home = { template: '<div>Home</div>' }
 
 export default new Router({
-  mode:'history',
+  mode: 'history',
   routes: [
     {
       path: '/',
       name: 'Hello',
       component: HelloWorld
-		},{
-			path:'/index/:id',
-			component: Index,
-			children:[
-				{
-					path:'',
-					component: Home
-				},{
-					path:'priofile',
-					component: Profile
-				},{
-					path:'post',
-					component: Post
-				}
-			]
-		},{
-			path:'/content/:id',
-			component: Content
-		},{
-			path:'/redirectToIndex',redirect:'/index/content'
-		},{
-			path:'/table',
-			component: Table
-		},{
-			path:'/member',
-			component: member
-		}
+    }, {
+      path: '/index/:id',
+      component: Index,
+      children: [
+        {
+          path: '',
+          component: Home
+        }, {
+          path: 'priofile',
+          component: Profile
+        }, {
+          path: 'post',
+          component: Post
+        }
+      ]
+    }, {
+      path: '/content/:id',
+      component: Content
+    }, {
+      path: '/redirectToIndex', redirect: '/index/content'
+    }, {
+      path: '/table',
+      component: Table
+    }, {
+      path: '/member',
+      component: member
+    }
   ]
 })

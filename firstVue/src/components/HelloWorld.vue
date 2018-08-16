@@ -25,7 +25,7 @@
 <script>
 export default {
   name: 'HelloWorld',
-  data () {
+  data() {
     return {
       msg: 'Welcome to <span style="color:red">Your</span> Vue.js App'
     }
@@ -51,5 +51,9 @@ li {
 
 a {
   color: #42b983;
+}
+
+.hello {
+  height: 100%;
 }
 </style>

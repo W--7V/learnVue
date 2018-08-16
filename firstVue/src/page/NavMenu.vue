@@ -20,9 +20,9 @@
 
 <script>
 export default {
-  name:'NavMenu',
-  props:['items'],
-  created:function(){
+  name: 'NavMenu',
+  props: ['items'],
+  created: function() {
   }
 }
 </script>

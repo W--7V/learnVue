@@ -9,6 +9,6 @@
 
 <script>
 export default {
-  name: 'content',
+  name: 'content'
 }
 </script>

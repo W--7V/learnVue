@@ -41,7 +41,7 @@
 
 <script>
 import tableComp from './tableComp'
-// import { list } from '@/api/member.js'
+import { list } from '@/api/member.js'
 var qs = require('querystring')
 export default {
   data: function() {
@@ -149,20 +149,11 @@ export default {
       }
     },
     getList() {
-      console.log(this.listQuery)
-
       this.listLoading = false
-      // list(this.listQuery).then((response) => {
-      this.$ajax({
-        url: 'http://localhost:8089/assistant/member/list',
-        method: 'get',
-        async: false,
-        params: this.listQuery
-      }).then((response) => {
+      list(this.listQuery).then((response) => {
         this.list = response.data.rows
         this.total = response.data.total
         this.listLoading = true
-        // console.log(this.list)
       })
     },
     resetQuery() {

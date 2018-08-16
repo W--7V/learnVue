@@ -1,7 +1,2 @@
-firstVue/.babelrc
-firstVue/.editorconfig
-firstVue/.postcssrc.js
-firstVue/README.md
-firstVue/static/.gitkeep
-/vue-element-admin-master
-/QcSM
+firstVue/node_modules
+
